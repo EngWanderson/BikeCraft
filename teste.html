@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    var baseurl = "http://localhost:8080/api/produtos";
+    function loadprodutos() {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", baseurl, true);
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+          var produtos = JSON.parse(xmlhttp.responseText);
+          var tbltop = `<table>
+        <tr><th>id</th><th>nome</th><th>quantidade</th><th>valor</th></tr>`;
+          //main table content we fill from data from the rest call
+          var main = "";
+          for (i = 0; i < produtos.length; i++) {
+            main += "<tr><td>" + produtos[i].id + " </td><td>" + produtos[i].nome + "</td><td>" + produtos[i].quantidade + "</td><td>" + produtos[i].valor + "</td></tr>";
+          }
+          var tblbottom = "</table>";
+          var tbl = tbltop + main + tblbottom;
+          document.getElementById("personinfo").innerHTML = tbl;
+        }
+      };
+      xmlhttp.send();
+    }
+    window.onload = function () {
+      loadprodutos();
+    }
+  </script>
+</head>
+
+<body>
+  <dir id="personinfo"></dir>
+  <form id="form_orcamento" class="contato_form grid-8">
+    <label for="nome">id</label>
+    <input type="text" id="nome">
+    <label for="email">nome</label>
+    <input type="text" id="email">
+    <label for="telefone">quantidade</label>
+    <input type="text" id="telefone">
+    <br>
+    <label for="espec">valor</label>
+    <input type="text" id="espec">
+    <button type="submit" class="btn btn-preto">Enviar</button>
+  </form </body>
+
+</html>
